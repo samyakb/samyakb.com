@@ -1,4 +1,4 @@
-baseURL: "https://samyakb.com"
+baseURL: "https://samyakb.com/"
 title: Samyak Bakliwal
 pagination:
   pagerSize: 20
@@ -56,8 +56,8 @@ outputs:
     - JSON
 
 params:
-  # enable giscus comments
-  comments: true
+  # enable giscus comments refer to nelson.cloud repo
+  comments: false
   env: production
   assets:
     disableFingerprinting: false
@@ -89,7 +89,7 @@ params:
   ShowFullTextinRSS: true
   ShowWordCount: true
   # Default images for Open Graph fallbacks (used when posts don't have cover images)
-  images: ["/opengraph-images/default.png"]
+  images: []
 
   # if i remove this config block then the front page ascii art breaks lol
   homeInfoParams:

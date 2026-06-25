@@ -102,13 +102,6 @@
         {{- $image = path.Join .RelPermalink .Params.cover.image | absURL -}}
       {{- end -}}
     {{- else -}}
-      {{- $og := partial "generate-opengraph-image.html" . -}}
-      {{- with $og -}}
-        {{- $image = dict "@type" "ImageObject" "url" .Permalink "width" 1200 "height" 630 -}}
-      {{- else -}}
-        {{- $images := partial "templates/_funcs/get-page-images" . -}}
-        {{- with index $images 0 -}}{{- $image = .Permalink -}}{{- end -}}
-      {{- end -}}
     {{- end -}}
 
     {{- $post := dict

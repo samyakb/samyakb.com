@@ -1,0 +1,32 @@
+#searchbox input {
+    padding: 4px 10px;
+    width: 100%;
+    color: var(--primary);
+    border: 1px solid var(--tertiary);
+}
+
+#searchbox input:focus {
+    border-color: var(--secondary);
+}
+
+#searchResults li {
+    list-style: none;
+    padding: 6px;
+    margin: 6px 0;
+    position: relative;
+    color: var(--tint);
+}
+
+#searchResults {
+    margin: 10px 0;
+    width: 100%;
+}
+
+#searchResults a {
+    outline: none;
+}
+
+#searchResults .focus {
+    transform: scale(0.98);
+    border: 2px solid var(--tertiary);
+}

@@ -1,0 +1,19 @@
+.terms-tags li {
+    display: inline-block;
+}
+
+.terms-tags a {
+    display: block;
+    padding: 8px 0;
+    color: var(--tint-2);
+}
+
+.terms-tags a::before {
+    content: "[";
+    color: var(--tertiary);
+}
+
+.terms-tags a::after {
+    content: "]";
+    color: var(--tertiary);
+}

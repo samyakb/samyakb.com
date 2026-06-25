@@ -1,0 +1,134 @@
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: var(--main-width);
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    line-height: var(--header-height);
+}
+
+.nav a {
+    display: block;
+}
+
+.logo,
+.menu {
+    display: flex;
+    margin: auto var(--gap);
+}
+
+.logo {
+    flex-wrap: inherit;
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo a img, .logo a svg {
+    display: inline;
+    vertical-align: middle;
+    pointer-events: none;
+    transform: translate(0, -10%);
+    margin-inline-end: 8px;
+}
+
+button#theme-toggle {
+    font-size: 26px;
+    margin: 0;
+}
+
+body.dark #moon {
+    vertical-align: middle;
+    display: none;
+}
+
+body:not(.dark) #sun {
+    display: none;
+}
+
+#moon,
+#sun {
+    color: var(--tint);
+}
+
+#moon:hover,
+#sun:hover {
+    filter: brightness(75%);
+}
+
+.menu {
+    list-style: none;
+    word-break: keep-all;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.menu li a span {
+    padding: 1px 3px 1px 3px;
+}
+
+.menu li + li {
+    margin-inline-start: var(--gap);
+}
+
+.menu .active {
+    color: var(--theme);
+    background-color: var(--tint);
+}
+
+.logo-switches {
+    flex-wrap: inherit;
+    display: inline-flex;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+#menu-trigger {
+    display: none;
+    cursor: pointer;
+}
+
+/* hamburger menu on smaller screens */
+/* Source: https://github.com/adityatelange/hugo-PaperMod/discussions/943 */
+@media screen and (width <= 768px) {
+    .menu {
+        list-style: none;
+        position: absolute;
+        right: 0;
+        z-index: 5;
+        margin-bottom: var(--gap);
+        padding: var(--gap);
+        background: var(--theme);
+        border: 1px solid var(--primary);
+        line-height: 2.5;
+        margin: calc(var(--header-height) - var(--gap)) var(--gap);
+        display: block;
+        box-shadow: 5px 5px var(--secondary);
+    }
+
+    .list .menu {
+        background: var(--theme);
+    }
+
+    .menu li+li {
+        margin-inline-start: 0;
+    }
+
+    #menu-trigger {
+        font-size: 30px;
+        position: relative;
+        display: block;
+        float: right;
+        margin: auto var(--gap);
+        color: var(--tint);
+    }
+
+    #menu-toggle:not(:checked) ~ .menu {
+        display: none;
+    }
+}

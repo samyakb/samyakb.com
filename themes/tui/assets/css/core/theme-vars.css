@@ -1,0 +1,93 @@
+:root {
+    color-scheme: light dark;
+
+    --font-sans: 'Geist', system-ui, sans-serif;
+
+    --gap: 24px;
+    --content-gap: 20px;
+    --nav-width: 720px;
+    --main-width: 80ch;
+    --header-height: 60px;
+    --footer-height: 60px;
+
+    /* Surface */
+    --theme: rgb(255, 254, 250);
+    --entry: rgb(246, 247, 255);
+
+    /* Brand */
+    --primary: rgb(42, 51, 219);
+    --tint: rgb(42, 51, 219);
+    --tint-2: rgb(84, 92, 245);
+
+    /* Text */
+    --content: rgb(27, 33, 110);
+    --secondary: rgb(76, 84, 170);
+    --tertiary: rgb(118, 124, 195);
+
+    /* Borders */
+    --border: rgb(209, 214, 255);
+
+    /* Code Blocks */
+    --code-block-bg: rgb(18, 23, 85);
+    --code-block-fg: rgb(242, 244, 255);
+    --code-block-hover: rgb(30, 37, 120);
+    --code-block-selection: rgb(210, 216, 255);
+    --code-block-muted: rgb(158, 166, 230);
+
+    --code-bg: rgb(235, 238, 255);
+    --code-font-color: rgb(42, 51, 219);
+
+    /* Blockquotes */
+    --blockquote-border: rgb(42, 51, 219);
+    --blockquote-background: rgba(42, 51, 219, 0.08);
+
+    /* Code Tabs */
+    --code-block-tab-text: rgb(242, 244, 255);
+    --code-block-tab-border: rgb(56, 66, 160);
+
+    /* Links */
+    --link-hover-bg: rgb(42, 51, 219);
+    --link-hover-fg: rgb(255, 255, 255);
+    --link-hover-secondary: rgb(220, 225, 255);
+}
+
+.dark {
+    /* Surface */
+    --theme: rgb(8, 11, 35);
+    --entry: rgb(15, 20, 55);
+
+    /* Brand (lighter version of primary) */
+    --primary: rgb(103, 114, 255);
+    --tint: rgb(103, 114, 255);
+    --tint-2: rgb(145, 154, 255);
+
+    /* Text */
+    --content: rgb(225, 229, 255);
+    --secondary: rgb(185, 192, 245);
+    --tertiary: rgb(130, 138, 210);
+
+    /* Borders */
+    --border: rgb(44, 54, 120);
+
+    /* Code Blocks */
+    --code-block-bg: rgb(4, 6, 20);
+    --code-block-fg: rgb(242, 244, 255);
+    --code-block-hover: rgb(18, 24, 60);
+    --code-block-muted: rgb(140, 150, 220);
+
+    --code-bg: rgb(20, 26, 65);
+    --code-font-color: rgb(145, 154, 255);
+
+    /* Blockquotes */
+    --blockquote-border: rgb(103, 114, 255);
+    --blockquote-background: rgba(103, 114, 255, 0.12);
+
+    /* Code Tabs */
+    --code-block-tab-text: rgb(242, 244, 255);
+    --code-block-tab-border: rgb(44, 54, 120);
+
+    /* Links */
+    --link-hover-bg: rgb(103, 114, 255);
+    --link-hover-fg: rgb(8, 11, 35);
+    --link-hover-secondary: rgb(225, 229, 255);
+}

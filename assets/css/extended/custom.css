@@ -1,0 +1,865 @@
+/* for ascii art on home page */
+pre.ascii-art {
+    line-height: 1.2;
+    white-space: pre-wrap;
+    max-width: 100%;
+
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.hidden-star {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    color: var(--tertiary);
+    text-shadow: 0 0 8px currentColor, 0 0 14px currentColor;
+}
+
+.hidden-star.star-tint {
+    color: var(--tint);
+}
+
+.hidden-star.star-tint-2 {
+    color: var(--tint-2);
+}
+
+/* stars animations */
+/* star animation 1 */
+.shining-star::after {
+    content: "*";
+    animation: shine 2s infinite alternate;
+}
+
+@keyframes shine {
+    0%, 50% { content: "*"; }
+    51%, 100% { content: "·"; }
+}
+
+/* star animation 2 */
+.shining-star-2::after {
+    content: "+";
+    animation: shine-2 2s infinite alternate;
+}
+
+@keyframes shine-2 {
+    0%, 50% { content: "+"; }
+    51%, 100% { content: "×"; }
+}
+
+.shining-star::after,
+.shining-star-2::after {
+    text-shadow: 0 0 8px currentColor, 0 0 14px currentColor;
+}
+
+::selection {
+  color: var(--theme);
+  background-color: var(--primary);
+}
+
+/* selection for code blocks */
+pre ::selection {
+    color: rgb(0, 0, 0);
+    background-color: var(--code-block-selection);
+}
+
+/* styling for links throughout */
+a {
+    color: var(--tint);
+    text-decoration: underline;
+}
+
+a:hover,
+a:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    background-clip: content-box; /* necessary for proper inverse on hover */
+    text-decoration: none;
+    outline: none;
+}
+
+/* hover inverse for nav bar */
+.nav a:hover,
+.nav a:focus-visible {
+    color: var(--tint);
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.nav a span:hover,
+.nav a:focus-visible span {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+}
+
+/* remove underlineonce inversion is showing */
+.nav a:has(span:hover),
+.nav a:focus-visible {
+    text-decoration: none;
+}
+
+/* to make theme toggle look nice when focused on with Tab key */
+#theme-toggle {
+    display: inline-flex;
+    align-items: center;
+}
+
+#theme-toggle:focus-visible {
+    background-color: var(--link-hover-bg);
+    outline: none;
+}
+
+#theme-toggle:focus-visible #moon,
+#theme-toggle:focus-visible #sun {
+    color: var(--link-hover-fg);
+}
+
+/* pagination buttons */
+.pagination a:hover,
+.pagination a:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    background-clip: border-box;
+    text-decoration: none;
+}
+
+/* prev/next post links under each post */
+.paginav a:hover,
+.paginav a:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    background-clip: border-box;
+    text-decoration: none;
+}
+
+.paginav a:hover .title,
+.paginav a:focus-visible .title {
+    color: var(--link-hover-fg);
+}
+
+.post-tags a {
+    display: inline; /* needed for inversion on hover for post categories */
+}
+
+/* CSS that underlines only the text within bracketed links */
+/* need to target <span> surrounding text so text gets underlined but not brackets */
+.random-post-button::before, .random-post-button::after,
+.link-count::before, .link-count::after,
+.post-tags a::before, .post-tags a::after {
+    display: inline-block;
+}
+
+.post-link,
+.related-posts a,
+.categories-chart a {
+    text-decoration: none;
+}
+
+.post-link > span,
+.related-posts a > span,
+.categories-chart a > span {
+    text-decoration: underline;
+}
+
+/* drop the underline once the hover/focus inversion shows */
+.post-link:hover > span,
+.post-link:focus-visible > span,
+.related-posts a:hover > span,
+.related-posts a:focus-visible > span,
+.categories-chart a:hover > span,
+.categories-chart a:focus-visible > span {
+    text-decoration: none;
+}
+
+/* Random post button */
+.random-post-button {
+    color: var(--tint);
+    text-decoration: underline;
+    margin-bottom: 2rem;
+}
+
+.random-post-button:hover,
+.random-post-button:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    text-decoration: none;
+    outline: none;
+}
+
+.random-post-button::before {
+    content: "[";
+    color: var(--tertiary);
+}
+
+.random-post-button::after {
+    content: "]";
+    color: var(--tertiary);
+}
+
+/* making random post + return home button full width rectangles */
+.paginav-row {
+    margin-bottom: 10px; /* gap between stacked boxes (home page has no .post-footer rhythm) */
+}
+
+.paginav-row .random-post-button,
+.paginav-row a {
+    width: 100%;
+    padding-inline: 14px;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--primary);
+}
+
+.paginav-row .random-post-button {
+    margin-bottom: 0;
+}
+
+/* no [ ] brackets */
+.paginav-row .random-post-button::before,
+.paginav-row .random-post-button::after {
+    content: none;
+}
+
+.paginav-row .random-post-button:hover,
+.paginav-row .random-post-button:focus-visible,
+.paginav-row a:hover,
+.paginav-row a:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    text-decoration: none;
+    outline: none;
+}
+
+/* make regular text prettier? */
+/* https://codersblock.com/blog/nicer-text-wrapping-with-css-text-wrap/ */
+.post-content p {
+    text-wrap: pretty;
+    line-height: 1.3;
+}
+
+/* balanced headings prevent awkward short last lines */
+.post-title,
+.post-content :is(h1, h2) {
+    text-wrap: balance;
+}
+
+/* going for a more "packed" terminal look */
+.entry-content {
+    line-height: 1.3;
+}
+
+.entry-footer {
+    line-height: 1.3;
+}
+
+.post-content li {
+    line-height: 1.3;
+}
+
+.post-content ol {
+    padding-inline-start: 32px;
+}
+
+.post-meta {
+    line-height: 1.3;
+}
+
+.post-title {
+    line-height: 1.1;
+}
+
+/* code blocks with syntax highlighting */
+.highlight {
+    padding-block: 0.5rem;
+    padding-inline-start: 0.5rem;
+}
+
+/* to remove overlapping borders */
+/* there should be a way to do this without additional css */
+.chroma td pre code {
+    border: 0;
+}
+
+/* post links */
+.post-link {
+    margin: 0;
+    padding: 0;
+    line-height: 1.1;
+}
+
+.post-link::before {
+    content: "[";
+    color: var(--tertiary);
+}
+
+.post-link::after {
+    content: "]";
+    color: var(--tertiary);
+}
+
+/* separator between posts (lists and the related posts section) */
+.post-entry:not(:last-child),
+.related-posts li:not(:last-child) {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* on light mode, add extra line for the Win 95 look */
+body:not(.dark) .post-entry:not(:last-child),
+body:not(.dark) .related-posts li:not(:last-child) {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.page-header {
+    margin: 24px auto var(--content-gap) auto;
+    text-transform: uppercase;
+}
+
+.page-header::after {
+    content: "---";
+}
+
+.related-posts-header::after {
+    content: "---";
+}
+
+/* related posts section */
+.related-posts {
+    padding-bottom: 1.5rem;
+}
+
+.related-posts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.related-posts li {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+.related-posts a::before {
+    content: "[";
+    color: var(--tertiary);
+}
+
+.related-posts a::after {
+    content: "]";
+    color: var(--tertiary);
+}
+
+.related-summary {
+    color: var(--secondary);
+}
+
+
+/* `tree` style table of contents */
+.toc details summary {
+    list-style: none;
+}
+
+.toc details summary::-webkit-details-marker {
+    display: none;
+}
+
+.toc details summary::before {
+    content: "[+] ";
+    font-family: monospace;
+    color: var(--secondary);
+}
+
+.toc details[open] summary::before {
+    content: "[-] ";
+}
+
+.toc .inner ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc .inner ul ul {
+    margin-left: 0;
+    padding-left: 0;
+    margin-inline-start: 0;
+}
+
+.toc li ul {
+    margin-inline-start: 0;
+}
+
+.toc .inner li {
+    position: relative;
+    padding-left: 4.5ch;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.toc .inner li::before {
+    content: "├── ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--secondary);
+    font-family: monospace;
+    line-height: 1.2;
+}
+
+/* vertical line connecting even through indentations */
+.toc .inner li:not(:last-child)::after {
+    content: "│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│\A│";
+    white-space: pre;
+    position: absolute;
+    left: 0;
+    top: 1.2em;
+    bottom: 0;
+    overflow: hidden;
+    color: var(--secondary);
+    font-family: monospace;
+    line-height: 1.2;
+    width: 1ch;
+}
+
+.toc .inner li:last-child::before {
+    content: "└── ";
+}
+
+.toc .inner {
+    padding: 10px 0;
+    margin: 0 20px 0 28px;
+}
+/* end `tree` style table of contents */
+
+/* floating table of contents */
+.dynamic-toc {
+    position: fixed;
+    top: 50%;
+    right: 5%;
+    translate: 0 -50%;
+    border: 1px solid var(--primary);
+    padding: 1rem;
+    max-width: 260px;
+    max-height: 70vh;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 5px 5px var(--primary);
+}
+
+.dynamic-toc-header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.dynamic-toc-title {
+    text-transform: uppercase;
+}
+
+.dynamic-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dynamic-toc-list .dynamic-toc-list {
+    margin-left: 1rem;
+    margin-top: 0.25rem;
+}
+
+.dynamic-toc-item {
+    margin: 0.25rem 0;
+}
+
+.dynamic-toc-link {
+    display: block;
+    color: var(--secondary);
+    text-decoration: none;
+    line-height: 1.2;
+    padding: 0.25rem 0.5rem;
+    border-left: 2px solid transparent;
+}
+
+.dynamic-toc-link:hover,
+.dynamic-toc-link:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    background-clip: border-box; /* fill the link's padding, like the other inverted elements */
+    outline: none;
+}
+
+.dynamic-toc-link.active {
+    color: var(--tint);
+    border-left-color: var(--tint);
+}
+
+.dynamic-toc-link.active:hover,
+.dynamic-toc-link.active:focus-visible {
+    color: var(--link-hover-fg);
+}
+
+/* light mode ToC drop shadow */
+.toc {
+    box-shadow: 5px 5px var(--primary);
+}
+
+/* dark mode ToC drop shadow*/
+.dark .toc,
+.dark .dynamic-toc {
+    box-shadow: 5px 5px var(--tertiary);
+}
+
+@media screen and (width <= 768px) {
+    .dark .menu {
+        box-shadow: 5px 5px var(--tertiary);
+    }
+}
+
+/* Hide on mobile and tablet */
+@media (width < 1450px) {
+    .dynamic-toc {
+        display: none;
+    }
+}
+
+/* Adjust TOC positioning for different screen sizes */
+@media (width >= 1450px) {
+    .dynamic-toc {
+        max-width: 280px;
+    }
+}
+
+/* remove padding and margin from text within blockquotes so text is centered properly */
+.post-content blockquote p {
+    margin: 0;
+    padding: 0;
+}
+
+/* admonitions */
+.admonition {
+    position: relative;
+    margin: 1.5rem 0;
+    padding: 0;
+    border-left: 3px solid var(--border);
+}
+
+.admonition-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.admonition-content {
+    padding: 0.75rem 1rem;
+}
+
+.admonition-content p:first-child {
+    margin-top: 0;
+}
+
+.admonition-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Admonition icon styling */
+.admonition-icon::before {
+    font-style: normal;
+}
+
+/* Note */
+.admonition-note {
+    border-left-color: #0000aa;
+    background-color: rgba(0, 0, 170, 0.1);
+}
+.admonition-note .admonition-title {
+    color: #0000aa;
+}
+.admonition-note .admonition-icon::before {
+    content: "[*]";
+}
+
+/* Info */
+.admonition-info {
+    border-left-color: #00496e;
+    background-color: rgba(0, 73, 110, 0.1);
+}
+.admonition-info .admonition-title {
+    color: #00496e;
+}
+.admonition-info .admonition-icon::before {
+    content: "[i]";
+}
+
+/* Tip */
+.admonition-tip {
+    border-left-color: #005400;
+    background-color: rgba(0, 84, 0, 0.1);
+}
+.admonition-tip .admonition-title {
+    color: #005400;
+}
+.admonition-tip .admonition-icon::before {
+    content: "[>]";
+}
+
+/* Warning */
+.admonition-warning {
+    border-left-color: #743a00;
+    background-color: rgba(116, 58, 0, 0.1);
+}
+.admonition-warning .admonition-title {
+    color: #743a00;
+}
+.admonition-warning .admonition-icon::before {
+    content: "[!]";
+}
+
+/* Danger */
+.admonition-danger {
+    border-left-color: #990000;
+    background-color: rgba(153, 0, 0, 0.1);
+}
+.admonition-danger .admonition-title {
+    color: #990000;
+}
+.admonition-danger .admonition-icon::before {
+    content: "[!!]";
+}
+
+/* Success */
+.admonition-success {
+    border-left-color: #005400;
+    background-color: rgba(0, 84, 0, 0.1);
+}
+.admonition-success .admonition-title {
+    color: #005400;
+}
+.admonition-success .admonition-icon::before {
+    content: "[+]";
+}
+
+/* Question */
+.admonition-question {
+    border-left-color: #7a007a;
+    background-color: rgba(122, 0, 122, 0.1);
+}
+.admonition-question .admonition-title {
+    color: #7a007a;
+}
+.admonition-question .admonition-icon::before {
+    content: "[?]";
+}
+
+/* Example */
+.admonition-example {
+    border-left-color: #474747;
+    background-color: rgba(71, 71, 71, 0.1);
+}
+.admonition-example .admonition-title {
+    color: #474747;
+}
+.admonition-example .admonition-icon::before {
+    content: "[#]";
+}
+
+/* Quote */
+.admonition-quote {
+    border-left-color: #474747;
+    background-color: rgba(71, 71, 71, 0.1);
+}
+.admonition-quote .admonition-title {
+    color: #474747;
+}
+.admonition-quote .admonition-icon::before {
+    content: "[\"]";
+}
+
+/* Dark mode */
+.dark .admonition-note {
+    border-color: #6c8cff;
+    background-color: rgba(108, 140, 255, 0.1);
+}
+.dark .admonition-note .admonition-title { color: #6c8cff; }
+
+.dark .admonition-info {
+    border-left-color: #55ccff;
+    background-color: rgba(85, 204, 255, 0.1);
+}
+.dark .admonition-info .admonition-title { color: #55ccff; }
+
+.dark .admonition-tip {
+    border-left-color: #55ff55;
+    background-color: rgba(85, 255, 85, 0.1);
+}
+.dark .admonition-tip .admonition-title { color: #55ff55; }
+
+.dark .admonition-warning {
+    border-left-color: #ffff55;
+    background-color: rgba(255, 255, 85, 0.1);
+}
+.dark .admonition-warning .admonition-title { color: #ffff55; }
+
+.dark .admonition-danger {
+    border-left-color: #ff5555;
+    background-color: rgba(255, 85, 85, 0.1);
+}
+.dark .admonition-danger .admonition-title { color: #ff5555; }
+
+.dark .admonition-success {
+    border-left-color: #55ff55;
+    background-color: rgba(85, 255, 85, 0.1);
+}
+.dark .admonition-success .admonition-title { color: #55ff55; }
+
+.dark .admonition-question {
+    border-left-color: #ff55ff;
+    background-color: rgba(255, 85, 255, 0.1);
+}
+.dark .admonition-question .admonition-title { color: #ff55ff; }
+
+.dark .admonition-example {
+    border-left-color: #aaaaaa;
+    background-color: rgba(170, 170, 170, 0.1);
+}
+.dark .admonition-example .admonition-title { color: #aaaaaa; }
+
+.dark .admonition-quote {
+    border-left-color: #aaaaaa;
+    background-color: rgba(170, 170, 170, 0.1);
+}
+.dark .admonition-quote .admonition-title { color: #aaaaaa; }
+
+/* categories page */
+.categories-chart {
+    list-style: none;
+    columns: 2;
+}
+
+/* uncomment if categories get too long and 2 columns is a tight fit on mobile */
+/*@media (max-width: 600px) {
+    .categories-chart {
+        columns: 1;
+    }
+}*/
+
+.categories-chart li {
+    display: grid; /* necessary for inverse on hover over text */
+    grid-template-columns: minmax(20ch, max-content) auto; /* necessary for inverse on hover over text */
+    gap: 1ch;
+    break-inside: avoid;
+}
+
+.categories-chart a {
+    justify-self: start; /* necessary for inverse on hover */
+    color: var(--tint-2);
+}
+
+.categories-chart a:hover,
+.categories-chart a:focus-visible {
+    color: var(--link-hover-fg);
+}
+
+.categories-chart a::before {
+    content: "[";
+    color: var(--tertiary);
+}
+
+.categories-chart a::after {
+    content: "]";
+    color: var(--tertiary);
+}
+
+.cat-count {
+    color: var(--secondary);
+    user-select: none;
+}
+
+/* links page styles */
+/**/
+.post-content > details {
+    margin-bottom: 0.8rem;
+}
+
+.post-content > details > summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+/* removes the triangle icon on safari */
+.post-content > details > summary::-webkit-details-marker {
+    display: none;
+}
+
+.post-content > details > summary h2 {
+    display: inline;
+    pointer-events: none; /* allows clicking headers to also reveal contents */
+}
+
+.post-content > details > summary::before {
+    content: "[+] ";
+}
+
+.post-content > details[open] > summary::before {
+    content: "[-] ";
+}
+
+.post-content > details[open] > summary {
+    margin-bottom: 1rem;
+}
+
+.link-domain {
+    color: var(--secondary);
+    font-size: 0.8em;
+}
+
+.link-count {
+    color: var(--secondary);
+}
+
+/* inverse link counts on hover/focus, for /links/ page */
+.toc a:hover .link-count,
+.toc a:focus-visible .link-count {
+    color: var(--link-hover-secondary);
+}
+
+.link-count::before {
+    content: "[";
+}
+
+.link-count::after {
+    content: "]";
+}
+
+/* language tab on code blocks */
+.post-content .highlight .code-lang {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 0.2rem 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    line-height: 1;
+    color: var(--code-block-tab-text);
+    background: var(--code-block-bg);
+    border-right: 1px solid var(--code-block-tab-border);
+    border-bottom: 1px solid var(--code-block-tab-border);
+    user-select: none;
+}
+
+/* extra top padding so the tab never overlaps the first line of code */
+.post-content .highlight > pre.chroma > code {
+    padding-top: 1.6rem;
+}
+
+/* "go to top" color inversion on hover */
+.top-link:hover,
+.top-link:focus-visible {
+    color: var(--link-hover-fg);
+    background-color: var(--link-hover-bg);
+    background-clip: border-box;
+    outline: none;
+}

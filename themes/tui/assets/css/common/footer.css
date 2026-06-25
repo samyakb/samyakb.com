@@ -1,0 +1,40 @@
+.footer {
+    max-width: var(--main-width);
+    margin: auto;
+    padding: calc((var(--footer-height) - var(--gap)) / 2) var(--gap);
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--secondary);
+}
+
+.footer span {
+    margin-inline-start: 1px;
+    margin-inline-end: 1px;
+}
+
+.footer span:last-child {
+    white-space: nowrap;
+}
+
+.footer a {
+    color: var(--tint);
+}
+
+.top-link {
+    color: var(--tint);
+    visibility: hidden;
+    position: fixed;
+    bottom: 60px;
+    right: 30px;
+    z-index: 99;
+    border: 1px solid var(--primary);
+    width: 42px;
+    height: 42px;
+    padding: 12px;
+    transition: visibility 0.2s, opacity 0.2s linear;
+    background: var(--theme);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

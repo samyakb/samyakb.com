@@ -1,0 +1,31 @@
+.chroma {
+    background-color: unset !important;
+}
+
+.chroma .hl {
+    display: flex;
+}
+
+.chroma .lnt {
+    padding: 0 0 0 12px;
+}
+
+.highlight pre.chroma code {
+    padding: 8px 0;
+}
+
+.highlight pre.chroma .line .cl,
+.chroma .ln {
+    padding: 0 10px;
+}
+
+.chroma .lntd:last-of-type {
+    width: 100%;
+}
+
+/* mute the output color in `console` code blocks so the command stands out
+   (uses its own variable: --secondary is dark in light mode, where the code
+   block surface is also dark) */
+.chroma .go {
+    color: var(--code-block-muted);
+}

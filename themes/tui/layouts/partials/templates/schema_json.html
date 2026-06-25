@@ -1,0 +1,139 @@
+{{- /*
+  Structured data as a single @graph of linked nodes.
+
+  Everything hangs off two canonical @id anchors:
+    - {baseURL}#person   the one Person node (author + publisher for the whole site)
+    - {baseURL}#website  the WebSite node
+  Other nodes reference these by @id instead of redeclaring them, so crawlers
+  (and LLMs) merge every mention into one entity across all pages.
+*/ -}}
+{{- if or .IsHome .IsPage .IsSection -}}
+
+{{- $home := site.Home.Permalink -}}
+{{- $personID := printf "%s#person" $home -}}
+{{- $websiteID := printf "%s#website" $home -}}
+
+{{- /* sameAs: external profile URLs only (relative links like the RSS feed are skipped) */ -}}
+{{- $sameAs := slice -}}
+{{- if site.Params.schema.sameAs -}}
+  {{- range site.Params.schema.sameAs -}}{{- $sameAs = $sameAs | append (trim . " ") -}}{{- end -}}
+{{- else -}}
+  {{- range site.Params.socialIcons -}}
+    {{- if hasPrefix .url "http" -}}{{- $sameAs = $sameAs | append (trim .url " ") -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* canonical Person node */ -}}
+{{- $names := split site.Params.author " " -}}
+{{- $knowsAbout := site.Params.schema.knowsAbout | default (slice "Cloud Computing" "Amazon Web Services" "Infrastructure as Code" "Software Engineering" "Cybersecurity") -}}
+{{- $person := dict
+  "@type" "Person"
+  "@id" $personID
+  "name" site.Params.author
+  "givenName" (index $names 0)
+  "familyName" (index $names (sub (len $names) 1))
+  "url" $home
+  "description" site.Params.description
+  "jobTitle" (site.Params.schema.jobTitle | default "Software Engineer")
+  "image" (site.Params.assets.favicon | default "favicon.ico" | absURL)
+  "knowsAbout" $knowsAbout
+  "sameAs" $sameAs
+-}}
+
+{{- /* WebSite node: full on home, slimmed elsewhere */ -}}
+{{- $websiteFull := dict
+  "@type" "WebSite"
+  "@id" $websiteID
+  "url" $home
+  "name" site.Title
+  "description" site.Params.description
+  "inLanguage" (site.Language.Lang | default "en-us")
+  "publisher" (dict "@id" $personID)
+  "author" (dict "@id" $personID)
+  "copyrightHolder" (dict "@id" $personID)
+-}}
+{{- $websiteSlim := dict "@type" "WebSite" "@id" $websiteID "url" $home "name" site.Title -}}
+
+{{- $graph := slice -}}
+
+{{- if .IsHome -}}
+  {{- $graph = $graph | append $person $websiteFull -}}
+{{- else -}}
+  {{- $graph = $graph | append $person $websiteSlim -}}
+
+  {{- /* BreadcrumbList */ -}}
+  {{- $crumbs := slice -}}
+  {{- $url := replace .Parent.Permalink $home "" -}}
+  {{- $lang_url := strings.TrimPrefix (printf "%s/" .Lang) $url -}}
+  {{- $acc := "" -}}
+  {{- $pos := 0 -}}
+  {{- range (split $lang_url "/") -}}
+    {{- if gt (len .) 0 -}}
+      {{- $acc = printf "%s%s/" $acc . -}}
+      {{- with site.GetPage $acc -}}
+        {{- $pos = add $pos 1 -}}
+        {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .Name "item" .Permalink) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $pos = add $pos 1 -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" $pos "name" .Name "item" .Permalink) -}}
+  {{- $graph = $graph | append (dict
+    "@type" "BreadcrumbList"
+    "@id" (printf "%s#breadcrumb" .Permalink)
+    "itemListElement" $crumbs) -}}
+
+  {{- if .IsPage -}}
+    {{- /* description */ -}}
+    {{- $desc := "" -}}
+    {{- with .Description -}}{{- $desc = . | plainify | htmlUnescape -}}{{- else -}}{{- $desc = .Summary | plainify | htmlUnescape -}}{{- end -}}
+
+    {{- /* keywords: explicit keywords, else tags */ -}}
+    {{- $keywords := slice -}}
+    {{- with .Params.keywords -}}{{- range . -}}{{- $keywords = $keywords | append . -}}{{- end -}}
+    {{- else -}}{{- range .Params.tags -}}{{- $keywords = $keywords | append . -}}{{- end -}}{{- end -}}
+
+    {{- /* image: mirror the OG image; ImageObject w/ dimensions for the generated one */ -}}
+    {{- $image := "" -}}
+    {{- if .Params.cover.image -}}
+      {{- if ne .Params.cover.relative true -}}
+        {{- $image = .Params.cover.image | absURL -}}
+      {{- else -}}
+        {{- $image = path.Join .RelPermalink .Params.cover.image | absURL -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $og := partial "generate-opengraph-image.html" . -}}
+      {{- with $og -}}
+        {{- $image = dict "@type" "ImageObject" "url" .Permalink "width" 1200 "height" 630 -}}
+      {{- else -}}
+        {{- $images := partial "templates/_funcs/get-page-images" . -}}
+        {{- with index $images 0 -}}{{- $image = .Permalink -}}{{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $post := dict
+      "@type" "BlogPosting"
+      "@id" (printf "%s#article" .Permalink)
+      "headline" (.Title | plainify)
+      "name" (.Title | plainify)
+      "description" $desc
+      "inLanguage" (.Language.Lang | default "en-us")
+      "wordCount" .WordCount
+      "datePublished" .PublishDate
+      "dateModified" .Lastmod
+      "keywords" $keywords
+      "author" (dict "@id" $personID)
+      "publisher" (dict "@id" $personID)
+      "isPartOf" (dict "@id" $websiteID)
+      "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+    -}}
+    {{- if $image -}}{{- $post = merge $post (dict "image" $image) -}}{{- end -}}
+    {{- $graph = $graph | append $post -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $ld := dict "@context" "https://schema.org" "@graph" $graph -}}
+<script type="application/ld+json">
+{{ jsonify (dict "indent" "  ") $ld | safeJS }}
+</script>
+{{- end -}}

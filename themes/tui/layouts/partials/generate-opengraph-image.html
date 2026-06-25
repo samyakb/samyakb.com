@@ -1,0 +1,80 @@
+{{- $img := "" -}}
+{{- $base := resources.Get "images/opengraph_base.png" -}}
+{{- $font := resources.Get "fonts/CommitMono.ttf" -}}
+{{- $fontBold := resources.Get "fonts/CommitMono-700.ttf" -}}
+{{- if and $base $font $fontBold (not .Params.cover.image) -}}
+  {{- $img = $base.Filter (images.Text (upper .Title) (dict
+    "color" "#ffffff"
+    "size" 48
+    "linespacing" 8
+    "x" 60
+    "y" 80
+    "font" $fontBold
+  )) -}}
+
+  {{/* Position description below however many lines the title wrapped to.
+       CommitMono at size 48 fits ~38 chars per line within the 1080px usable width. */}}
+  {{- $titleLines := math.Ceil (div (len .Title | float) 38.0) -}}
+  {{- $descY := add 80 (mul $titleLines 56) | add 12 -}}
+
+  {{/* Description below title, greedy word-wrapped. --secondary in dark mode. */}}
+  {{- $desc := or .Description .Params.summary -}}
+  {{- with $desc -}}
+    {{- $maxChars := 65 -}}
+    {{- $lines := slice -}}
+    {{- $current := "" -}}
+    {{- range (split (. | plainify) " ") -}}
+      {{- $word := . -}}
+      {{- if ne $word "" -}}
+        {{- $candidate := cond (eq $current "") $word (printf "%s %s" $current $word) -}}
+        {{- if le (len $candidate) $maxChars -}}
+          {{- $current = $candidate -}}
+        {{- else -}}
+          {{- if ne $current "" -}}{{- $lines = $lines | append $current -}}{{- end -}}
+          {{- $current = $word -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if ne $current "" -}}{{- $lines = $lines | append $current -}}{{- end -}}
+    {{- $img = $img.Filter (images.Text (delimit $lines "\n") (dict
+      "color" "#9c9c9c"
+      "size" 24
+      "linespacing" 6
+      "x" 60
+      "y" $descY
+      "font" $font
+    )) -}}
+  {{- end -}}
+
+  {{/* Render [nelson.cloud] as three segments: bracket, domain, bracket */}}
+  {{- $size := 28 -}}
+  {{- $charW := 17 -}}
+  {{- $baseX := 60 -}}
+  {{- $y := 540 -}}
+  {{- $bracketColor := "#424242" -}}
+  {{- $tintColor := "#dcdcdc" -}}
+  {{- $img = $img.Filter (images.Text "[" (dict
+    "color" $bracketColor
+    "size" $size
+    "x" $baseX
+    "y" $y
+    "font" $font
+  )) -}}
+  {{- $img = $img.Filter (images.Text "nelson.cloud" (dict
+    "color" $tintColor
+    "size" $size
+    "x" (add $baseX $charW)
+    "y" $y
+    "font" $font
+  )) -}}
+  {{- $img = $img.Filter (images.Text "]" (dict
+    "color" $bracketColor
+    "size" $size
+    "x" (add $baseX (mul $charW 13))
+    "y" $y
+    "font" $font
+  )) -}}
+  {{- $img = $img.Filter (images.Padding 1 "#7c7c7c") -}}
+  {{- $img = resources.Copy (printf "%sog.png" .RelPermalink) $img -}}
+{{- end -}}
+{{- return $img -}}

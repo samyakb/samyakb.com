@@ -1,0 +1,72 @@
+.first-entry {
+    margin: 3rem 0 3rem 0;
+    text-align: center;
+}
+
+.first-entry h1 {
+    line-height: 1.3;
+}
+
+.first-entry .entry-content {
+    margin: 14px 0;
+    -webkit-line-clamp: 3;
+}
+
+.first-entry .entry-footer {
+    font-size: 14px;
+}
+
+.home-info .entry-content {
+    -webkit-line-clamp: unset;
+}
+
+.post-entry {
+    position: relative;
+    margin-bottom: var(--gap);
+}
+
+.tag-entry .entry-cover {
+    display: none;
+}
+
+.entry-content {
+    margin: 8px 0;
+    color: var(--secondary);
+    line-height: 1.6;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.entry-footer {
+    color: var(--secondary);
+    font-size: 13px;
+    line-height: 1.6rem;
+}
+
+.entry-link {
+    position: absolute;
+    inset: 0;
+}
+
+.entry-hint {
+    color: var(--secondary);
+}
+
+.entry-cover {
+    font-size: 14px;
+    margin-bottom: var(--gap);
+    text-align: center;
+}
+
+.entry-cover img {
+    pointer-events: none;
+    width: 100%;
+    height: auto;
+}
+
+.entry-cover a {
+    color: var(--secondary);
+    box-shadow: 0 1px 0 var(--primary);
+}

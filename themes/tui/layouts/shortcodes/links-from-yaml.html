@@ -1,0 +1,26 @@
+{{ range hugo.Data.links.categories }}
+{{ $anchor := .name | urlize }}
+<details>
+<summary><h2 id="{{ $anchor }}">{{ .name }} <span class="link-count">{{ len .links }}</span></h2></summary>
+
+{{ if .description }}<p>{{ .description }}</p>{{ end }}
+
+<table>
+<tbody>
+{{ range .links }}
+<tr>
+<td>
+{{- $url := .url -}}
+<a href="{{ $url | safeURL }}"{{ if strings.HasPrefix $url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .title }}</a>
+{{- if strings.HasPrefix $url "http" }}
+{{- $parsed := urls.Parse $url }}
+<br><span class="link-domain">{{ $parsed.Hostname }}</span>
+{{- end -}}
+</td>
+</tr>
+{{ end }}
+</tbody>
+</table>
+
+</details>
+{{ end }}

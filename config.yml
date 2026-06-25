@@ -1,0 +1,157 @@
+baseURL: "https://samyakb.com"
+title: Samyak Bakliwal
+pagination:
+  pagerSize: 20
+theme: [tui]
+
+disableHugoGeneratorInject: true # remove <meta name="generator" content="Hugo {{ hugo.Version }}"> from HTML output
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+mainsections: ["posts"]
+
+# use first 160 words as summary if a summary is not provided for a post
+summaryLength: 160
+
+enableGitInfo: false
+frontmatter:
+  lastmod:
+    - lastmod
+    - date
+
+permalinks:
+  posts: "/:title/"
+
+languages:
+  en:
+    label: "English"
+    weight: 1
+    taxonomies:
+      category: categories
+    menu:
+      main:
+        - name: Home
+          url: /
+          weight: 1
+        - name: Posts
+          url: posts/
+          weight: 2
+        - name: Categories
+          url: categories/
+          weight: 3
+        - name: Search
+          url: search/
+          weight: 4
+        - name: About
+          url: about/
+          weight: 6
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+params:
+  # enable giscus comments
+  comments: true
+  env: production
+  assets:
+    disableFingerprinting: false
+  description: "Samyak Bakliwal - Software Engineer with 5 YOE as a backend developer in Golang. Currently learning Rust in my free time"
+  author: Samyak Bakliwal
+  # keywords for home page
+  keywords: ["Samyak Bakliwal", "Software Engineer", "Backend Developer"]
+
+  DateFormat: 2006-01-02
+
+  # hide summary in post links
+  hideSummary: false
+
+  # show share buttons under every post.
+  ShowShareButtons: false
+  ShareButtons: ["x", "linkedin", "reddit", "ycombinator"] # whitelist share buttons
+
+  defaultTheme: auto
+  ShowReadingTime: true
+  # disableSpecial1stPost: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowAllPagesInArchive: true
+  ShowPageNums: true
+  ShowToc: false
+  ShowFullTextinRSS: true
+  ShowWordCount: true
+  # Default images for Open Graph fallbacks (used when posts don't have cover images)
+  images: ["/opengraph-images/default.png"]
+
+  # if i remove this config block then the front page ascii art breaks lol
+  homeInfoParams:
+    Title: Samyak Bakliwal
+    Content: Software Engineer
+
+  socialIcons:
+    - name: github
+      title: GitHub
+      url: "https://github.com/samyakb"
+    - name: linkedin
+      title: LinkedIn
+      url: "https://www.linkedin.com/in/samyakb/"
+    - name: rss
+      title: RSS Feed
+      url: "/index.xml"
+
+  # label:
+  # iconSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>'
+  # text: "Home"
+  # icon: icon.png
+  # iconHeight: 35
+
+  cover:
+      hidden: true # hide everywhere but not in structured data
+      hiddenInList: true # hide on list pages and home
+      hiddenInSingle: true # hide on single page
+
+  # for search
+  fuseOpts:
+      isCaseSensitive: false
+      shouldSort: true
+      location: 0
+      distance: 1000
+      threshold: 0.4
+      minMatchCharLength: 2
+      keys: ["title", "permalink", "summary", "content", "tags", "categories"]
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+    # anchorLineNos: true
+    codeFences: true
+    # guessSyntax: true
+    lineNos: false
+    # lineNumbersInTable: true
+
+related:
+  includeNewer: true
+  threshold: 80
+  toLower: false
+  indices:
+    - name: categories
+      weight: 100
+    - name: date
+      weight: 10
+
+services:
+  instagram:
+    disableInlineCSS: true
+  x:
+    disableInlineCSS: true

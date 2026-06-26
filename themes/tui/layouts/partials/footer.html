@@ -15,7 +15,7 @@
     </span>
     <br>
     <span>
-        Last deployed on {{ now | dateFormat "2006-01-02 15:04 PT" }}
+        Last deployed on {{ now.In (loadLocation "Asia/Kolkata") | dateFormat "2006-01-02 15:04 IST" }}
     </span>
     <br>
     <span>

@@ -1,0 +1,26 @@
+name: Deploy to Cloudflare Workers
+
+on:
+  workflow_dispatch:  # Adds the manual "Run workflow" button in GitHub Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'v0.163.3'
+          extended: true  # remove if you don't use SCSS/extended features
+
+      - name: Build
+        run: hugo --minify --cleanDestinationDir
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_TOKENh }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}

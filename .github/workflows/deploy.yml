@@ -13,7 +13,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'v0.163.3'
+          hugo-version: '0.163.3'
           extended: true  # remove if you don't use SCSS/extended features
 
       - name: Build
